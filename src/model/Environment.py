@@ -1,5 +1,6 @@
 import random
 import itertools
+from sys import _current_frames
 
 class Deck:
     """Creating the deck with randomly shuffled 52 cards."""
@@ -53,7 +54,7 @@ class Hand(Deck):
         # print(self.__str__('Player 4 :- ',player_4))
 
 
-class Rule(Hand):
+class Rules(Hand):
     def __init__(self):
         super().__init__()
 
@@ -70,28 +71,44 @@ class Rule(Hand):
         pass
 
 
-class Play(Rule):
-    def __init__(self):
+class Play(Rules):
+    def __init__(self, turn=1, current_bid=[0, 0, 0, 0], total_bid=[0, 0, 0, 0], achieved_bid=[0, 0, 0, 0]):
         super().__init__()
+        self.turn = turn
+        self.current_bid = current_bid
+        self.total_bid = total_bid
+        self.achieved_bid = achieved_bid
 
-    def initiate_turn(self):
-        pass
+    def initiate_turn(self) -> int:
+        """Randoming first player to throw or bid."""
+        self.turn = random.randint(1, 4)
+        return self.turn
 
-    def cycle(self):
-        pass
+    def cycle(self) -> int:
+        """Moving onto the next player."""
+        return (self.turn + 1) % 4
 
     def next_round(self):
-        pass
+        """Reseting for the next round."""
+        self.turn = self.initiate_turn()
 
     def bid(self):
-        pass
+        """Taking bid from the players."""
+        for i in range(4):
+            x = int(input(f"Enter the bid for player{i} = "))
+            self.current_bid[i] = x
 
     def bid_count(self):
+        """Storing the total achieved bids."""
+        for i in range(4):
+            if self.achieved_bid[i] < self.current_bid[i]:
+                self.total_bid[i] -= self.current_bid[i]
+            else:
+                self.total_bid[i] = self.current_bid[i] + (self.achieved_bid - self.current_bid[i]) * 0.1
+
+    def card_played(self):
         pass
 
-    def card_plaeyd(self):
-        pass
-
-if _name_ == "_main_":
+if __name__ == "__main__":
     rules = Rules()
     rules.throw_shape_status()
