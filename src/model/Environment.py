@@ -53,30 +53,45 @@ class Hand(Deck):
         # print(self.__str__('Player 4 :- ',player_4))
 
 
-class Rules(Hand):
-    def __init__(self, throw_card='', round_card=[]):
+class Rule(Hand):
+    def __init__(self):
         super().__init__()
-        super().distribute()
-        self.throw_card = throw_card
-        self.round_card = round_card
 
-    def round_shape(self) -> str:
-        """Shape of the card thrown initially in first round."""
-        return self.round_card[0][0]
-
-    def throw_shape_status(self) -> bool:
-        """Checks if the throw_card matches the playing round shape or not"""
-        return True if self.throw_card == self.round_shape() or self.throw_card == '\u2660' else False
-
-
-
-    def playcard(self):
+    def initiate_shape(self):
         pass
 
-    def wincard(self):
+    def other_rank(self):
+        pass
+
+    def change_spade(self):
+        pass
+
+    def any_card(self):
         pass
 
 
-if __name__ == "__main__":
+class Play(Rule):
+    def __init__(self):
+        super().__init__()
+
+    def initiate_turn(self):
+        pass
+
+    def cycle(self):
+        pass
+
+    def next_round(self):
+        pass
+
+    def bid(self):
+        pass
+
+    def bid_count(self):
+        pass
+
+    def card_plaeyd(self):
+        pass
+
+if _name_ == "_main_":
     rules = Rules()
     rules.throw_shape_status()
