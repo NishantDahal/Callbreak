@@ -55,14 +55,26 @@ class Hand(Deck):
 
 
 class Rules(Hand):
-    def __init__(self):
+    def __init__(self, throw='', round=[]):
         super().__init__()
+        self.throw = self.card_played() #This calls the method from the child class -> Play
+        self.round = round
+
+    def first_or_not(self):
+        """Checks if the card played is the first card played in the round or not"""
+        if not round:
+            return True
+        else:
+            return False
 
     def initiate_shape(self):
-        pass
+        """Checks if the round is being played in correct suit or not."""
+        if not self.first_or_not:
+            if self.round[0][0] == self.throw[0]:
+                return True
 
-    def other_rank(self):
-        pass
+    def higher_rank(self):
+        print(self.suits)
 
     def change_spade(self):
         pass
@@ -70,10 +82,14 @@ class Rules(Hand):
     def any_card(self):
         pass
 
+    def card_played(self):
+        pass
+
 
 class Play(Rules):
-    def __init__(self, turn=1, current_bid=[0, 0, 0, 0], total_bid=[0, 0, 0, 0], achieved_bid=[0, 0, 0, 0]):
+    def __init__(self, throw='', turn=1, current_bid=[0, 0, 0, 0], total_bid=[0, 0, 0, 0], achieved_bid=[0, 0, 0, 0]):
         super().__init__()
+        self.throw = throw
         self.turn = turn
         self.current_bid = current_bid
         self.total_bid = total_bid
@@ -107,8 +123,11 @@ class Play(Rules):
                 self.total_bid[i] = self.current_bid[i] + (self.achieved_bid - self.current_bid[i]) * 0.1
 
     def card_played(self):
-        pass
+        """Throwing the card."""
+        self.throw = input("Throw the card : ")
+        return self.throw
+        # continue the code here
 
 if __name__ == "__main__":
-    rules = Rules()
-    rules.throw_shape_status()
+    r = Rules()
+    r.higher_rank()
