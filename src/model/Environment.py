@@ -1,6 +1,5 @@
 import random
 import itertools
-from sys import _current_frames
 
 class Deck:
     """Creating the deck with randomly shuffled 52 cards."""
@@ -55,10 +54,11 @@ class Hand(Deck):
 
 
 class Rules(Hand):
-    def __init__(self, throw='', round=[]):
+    def __init__(self, throw='', round=[], priority=[]):
         super().__init__()
         self.throw = self.card_played() #This calls the method from the child class -> Play
         self.round = round
+        self.priority = priority # This will be used to determine the winner of the round
 
     def first_or_not(self):
         """Checks if the card played is the first card played in the round or not"""
@@ -72,12 +72,20 @@ class Rules(Hand):
         if not self.first_or_not:
             if self.round[0][0] == self.throw[0]:
                 return True
+        else:
+                return False
+
 
     def higher_rank(self):
-        print(self.suits)
+        """Checks if the player is throwing higher rank card than before or not."""
+        if not self.first_or_not:
+            if self.ranks.index(self.throw[1:]) > self.ranks.index(self.round[-1][1:]):
+                self.priority.append(self.ranks.index(self.throw[1:]))
+                return True
 
-    def change_spade(self):
-        pass
+
+    def allow_spade(self):
+
 
     def any_card(self):
         pass
